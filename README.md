@@ -33,10 +33,10 @@ or
 (auth/url {:state "" :scope "basic+public_content"})
 ; => https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=code&scope=basic+public_content
 
-; using something like compojure
-(defn access-token-handler [{:keys [params]}]
-  (let [{:keys [code]} params]
-    (auth/set-access-token! code)))
+; using something like compojure for the redirect
+(defn access-token-handler [{:keys [params error]}]
+  (let [_ (auth/set-access-token! (:code params))]
+    (ok {})))
 
 (GET "/redirect-uri" [] access-token-handler)
 ```
