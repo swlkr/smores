@@ -32,3 +32,14 @@
                               :redirect-uri (env :redirect-uri)})]
         (is (= valid-url
                (auth/url {})))))))
+
+(deftest make-access-token-request
+  (testing "should append code to form-params"
+    (let [req (auth/get-access-token-req "the code")]
+      (is (= {:url (str auth/auth-url "access-token")
+              :method :post
+              :form-params {"client_id" ""
+                            "client_secret" ""
+                            "grant_type" "authorization_code"
+                            "redirect_uri" ""
+                            "code" "the code"}})))))

@@ -15,4 +15,3 @@
 
 (defn get-creds []
   (deref creds))
-
